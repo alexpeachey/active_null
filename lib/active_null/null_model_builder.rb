@@ -17,7 +17,7 @@ module ActiveNull
 
         model.reflect_on_all_associations.each do |relation|
           if relation.collection?
-            define_method(relation.name) { [] }
+            define_method(relation.name) { relation.klass.none }
           else
             define_method(relation.name) do
               return unless relation.klass.respond_to? :null

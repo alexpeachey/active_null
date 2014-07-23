@@ -11,6 +11,7 @@ describe ActiveNull do
 
   describe 'a has many' do
     specify { expect(Post.null.comments).to eq [] }
+    specify { expect(Post.null.comments).to be_instance_of(Comment::ActiveRecord_Relation) }
   end
 
   describe 'a belongs to' do
