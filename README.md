@@ -46,7 +46,7 @@ You can now do things like this:
 
 ```ruby
 Post.null              # => <null:Post>
-Post.null.comments     # => []
+Post.null.comments     # => <ActiveRecord::Relation []>
 Comment.null           # => <null:Comment>
 Comment.null.post      # => <null:Post>
 Comment.new.post       # => <null:Post>
