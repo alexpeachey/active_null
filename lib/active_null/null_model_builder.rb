@@ -45,9 +45,35 @@ module ActiveNull
         def to_json
           '{}'
         end
+
+        if Object.const_defined? 'Draper'
+          def decorate(options = {})
+            decorator_class.decorate(self, options)
+          end
+
+          def decorator_class
+            self.class.decorator_class
+          end
+
+          def decorator_class?
+            self.class.decorator_class?
+          end
+
+          def applied_decorators
+            []
+          end
+
+          def decorated_with?(decorator_class)
+            false
+          end
+
+          def decorated?
+            false
+          end
+        end
       end
-      null.class_eval { include Draper::Decoratable } if Object.const_defined? 'Draper'
-      null.include(overrides) if overrides
+      null.include Draper::Decoratable if Object.const_defined? 'Draper'
+      null.include overrides if overrides
       set_null_model null
     end
 
