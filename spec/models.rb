@@ -8,6 +8,11 @@ class Post < ActiveRecord::Base
   end
 end
 
+class MicroPost < Post
+  extend ActiveNull
+  null_model
+end
+
 class Comment < ActiveRecord::Base
   extend ActiveNull
   belongs_to :post
