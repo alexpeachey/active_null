@@ -11,7 +11,6 @@ module ActiveNull
 
     def build
       model = self.model
-      return full_name.constantize if Object.const_defined? full_name
       null = Naught.build do |config|
         config.impersonate model
 
