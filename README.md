@@ -34,11 +34,13 @@ For each model you would like to be null aware, `extend ActiveNull`.
 class Post < ActiveRecord::Base
   extend ActiveNull
   has_many :comments
+  null_model
 end
 
 class Comment < ActiveRecord::Base
   extend ActiveNull
   belongs_to :post
+  null_model
 end
 ```
 

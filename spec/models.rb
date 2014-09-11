@@ -11,6 +11,7 @@ end
 class Comment < ActiveRecord::Base
   extend ActiveNull
   belongs_to :post
+  null_model
 end
 
 class NullPostDecorator < Draper::Decorator
@@ -19,4 +20,11 @@ end
 
 class PostDecorator < Draper::Decorator
   delegate_all
+end
+
+module Test
+  class TestModel < ActiveRecord::Base
+    extend ActiveNull
+    null_model
+  end
 end

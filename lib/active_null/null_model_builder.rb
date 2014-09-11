@@ -72,8 +72,8 @@ module ActiveNull
           end
         end
       end
-      null.include Draper::Decoratable if Object.const_defined? 'Draper'
-      null.include overrides if overrides
+      null.send(:include, Draper::Decoratable) if Object.const_defined? 'Draper'
+      null.send(:include, overrides) if overrides
       set_null_model null
     end
 

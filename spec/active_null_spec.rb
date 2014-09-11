@@ -1,8 +1,13 @@
 require 'spec_helper'
 
 describe ActiveNull do
+  it 'defines the null class' do
+    expect(Object.const_defined? 'NullPost').to eq true
+  end
+
   describe '.null' do
     specify { expect(Post.null).to be_instance_of(NullPost) }
+    specify { expect(Test::TestModel.null).to be_instance_of(Test::NullTestModel) }
   end
 
   describe '.null_model' do

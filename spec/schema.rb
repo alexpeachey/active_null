@@ -11,4 +11,8 @@ ActiveRecord::Schema.define do
     t.references :post
     t.timestamps
   end
+
+  create_table :test_models, force: true do |t|
+    t.timestamps
+  end
 end
