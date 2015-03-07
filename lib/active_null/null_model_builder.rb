@@ -25,8 +25,10 @@ module ActiveNull
           end
         end
 
-        model.column_defaults.each do |field, default|
-          define_method(field.to_sym) { default }
+        unless ActiveRecord::Migrator.needs_migration?
+          model.column_defaults.each do |field, default|
+            define_method(field.to_sym) { default }
+          end
         end
 
         def nil?
