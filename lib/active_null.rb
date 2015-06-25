@@ -3,14 +3,13 @@ require 'active_null/null_model_builder'
 
 module ActiveNull
   def null
-    @null_class.get
+    null_class.get
   end
 
   def null_model(&block)
-    null_model_overrides = if block_given?
+    @null_model_overrides = if block_given?
       Module.new.tap { |m| m.module_eval(&block) }
     end
-    @null_class = NullModelBuilder.new(self, null_model_overrides).build
   end
 
   def find_by(*args, &block)
@@ -29,6 +28,10 @@ module ActiveNull
         CODE
       end
     end
+  end
+
+  def null_class
+    @null_class ||= NullModelBuilder.new(self, @null_model_overrides).build
   end
 
   def self.extended(klass)

@@ -1,8 +1,17 @@
 require 'spec_helper'
 
 describe ActiveNull do
-  it 'defines the null class' do
-    expect(Object.const_defined? 'NullPost').to eq true
+  it 'defines the null class only when accessing it for the first time (ie: with a .null or .null_class call)' do
+    expect(Object.const_defined? 'NullPost').to be_falsey
+    expect(Object.const_defined? 'NullMicroPost').to be_falsey
+    expect(Post.null).to be_instance_of(NullPost)
+    expect(MicroPost.null_class).to eq NullMicroPost
+    expect(Object.const_defined? 'NullPost').to be_truthy
+    expect(Object.const_defined? 'NullMicroPost').to be_truthy
+  end
+
+  describe '.null_class' do
+    specify { expect(MicroPost.null_class).to eq NullMicroPost }
   end
 
   describe '.null' do
