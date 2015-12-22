@@ -1,3 +1,7 @@
+[![Circle CI](https://circleci.com/gh/Originate/active_null.svg?style=svg)](https://circleci.com/gh/Originate/active_null)
+[![Coverage Status](https://coveralls.io/repos/Originate/active_null/badge.svg?branch=master&service=github)](https://coveralls.io/github/Originate/active_null?branch=master)
+[![Code Climate](https://codeclimate.com/github/Originate/active_null/badges/gpa.svg)](https://codeclimate.com/github/Originate/active_null)
+
 # ActiveNull
 
 Using Null Objects can make life a lot easier and avoid having excessive `nil?` checks.
