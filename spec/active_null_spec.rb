@@ -4,10 +4,11 @@ describe ActiveNull do
   it 'defines the null class only when accessing it for the first time (ie: with a .null or .null_class call)' do
     expect(Object.const_defined? 'NullPost').to be_falsey
     expect(Object.const_defined? 'NullMicroPost').to be_falsey
-    expect(Post.null).to be_instance_of(NullPost)
+    expect(Post.null).to be_instance_of NullPost
     expect(MicroPost.null_class).to eq NullMicroPost
     expect(Object.const_defined? 'NullPost').to be_truthy
     expect(Object.const_defined? 'NullMicroPost').to be_truthy
+    expect(Test::TestModel.null).to be_instance_of Test::NullTestModel
   end
 
   describe '.null_class' do
@@ -22,6 +23,10 @@ describe ActiveNull do
 
   describe '.null_model' do
     specify { expect(Post.null.override).to eq 'I am an override.' }
+  end
+
+  describe '.find_by' do
+    specify { expect(Test::TestModel.find_by(id: 42)).to be_instance_of(Test::NullTestModel) }
   end
 
   describe 'a has many' do
