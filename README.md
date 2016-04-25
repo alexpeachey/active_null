@@ -38,13 +38,11 @@ For each model you would like to be null aware, `extend ActiveNull`.
 class Post < ActiveRecord::Base
   extend ActiveNull
   has_many :comments
-  null_model
 end
 
 class Comment < ActiveRecord::Base
   extend ActiveNull
   belongs_to :post
-  null_model
 end
 ```
 
@@ -75,6 +73,17 @@ class Post < ActiveRecord::Base
       # special functionality
     end
   end
+end
+```
+
+When using polymorphic relationships, ActiveNull must be told a default
+model to use for the Null Object representation.
+
+```ruby
+class Post < ActiveRecord::Base
+  extend ActiveNull
+  belongs_to :author, polymorphic: true
+  null_defaults_for_polymorphic author: 'User'
 end
 ```
 

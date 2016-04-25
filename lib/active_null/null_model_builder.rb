@@ -15,12 +15,22 @@ module ActiveNull
         config.impersonate model
 
         model.reflect_on_all_associations.each do |relation|
+          klass = begin
+            if relation.options[:polymorphic]
+              model.polymorphic_null_defaults[relation.name].constantize
+            else
+              relation.klass
+            end
+          rescue
+            nil
+          end
+          next unless klass
           if relation.collection?
-            define_method(relation.name) { relation.klass.none }
+            define_method(relation.name) { klass.none }
           else
             define_method(relation.name) do
-              return unless relation.klass.respond_to? :null
-              relation.klass.null
+              return unless klass.respond_to? :null
+              klass.null
             end
           end
         end

@@ -10,13 +10,18 @@ end
 
 class MicroPost < Post
   extend ActiveNull
-  null_model
+end
+
+class User < ActiveRecord::Base
+  extend ActiveNull
+  has_many :comments, as: :author
 end
 
 class Comment < ActiveRecord::Base
   extend ActiveNull
   belongs_to :post
-  null_model
+  belongs_to :author, polymorphic: true
+  null_defaults_for_polymorphic author: 'User'
 end
 
 class NullPostDecorator < Draper::Decorator
@@ -30,6 +35,5 @@ end
 module Test
   class TestModel < ActiveRecord::Base
     extend ActiveNull
-    null_model
   end
 end

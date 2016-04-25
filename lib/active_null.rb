@@ -6,6 +6,14 @@ module ActiveNull
     null_class.get
   end
 
+  def null_defaults_for_polymorphic mappings
+    @polymorphic_null_defaults = mappings
+  end
+
+  def polymorphic_null_defaults
+    @polymorphic_null_defaults || {}
+  end
+
   def null_model(&block)
     @null_model_overrides = if block_given?
       Module.new.tap { |m| m.module_eval(&block) }
@@ -19,11 +27,21 @@ module ActiveNull
   def null_associations
     self.reflect_on_all_associations.each do |relation|
       unless relation.collection?
+        klass = begin
+          if relation.options[:polymorphic]
+            polymorphic_null_defaults[relation.name]
+          elsif relation.klass
+            relation.klass.name
+          end
+        rescue
+          nil
+        end
+        next unless klass
         class_eval <<-CODE
           def #{relation.name}(*args)
             result = association(:#{relation.name}).reader(*args)
-            return result if result || !#{relation.klass.name}.respond_to?(:null)
-            #{relation.klass.name}.null
+            return result if result || !#{klass}.respond_to?(:null)
+            #{klass}.null
           end
         CODE
       end

@@ -39,6 +39,8 @@ describe ActiveNull do
   describe 'a belongs to' do
     specify { expect(Comment.null.post).to be_instance_of(NullPost) }
     specify { expect(Comment.new.post).to be_instance_of(NullPost) }
+    specify { expect(Comment.null.author).to be_instance_of(NullUser) }
+    specify { expect(Comment.new.author).to be_instance_of(NullUser) }
   end
 
   it 'supports draper' do
