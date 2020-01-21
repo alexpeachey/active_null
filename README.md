@@ -96,6 +96,21 @@ You can then safely do something like:
 @post = Post.find_by(id: 1).decorate
 ```
 
+You can also define an alias for your `null` method for convenience
+
+```ruby
+class User < ActiveRecord::Base
+  extend ActiveNull
+
+  null_model(:guest)
+end
+
+User.first    # => <User>
+User.null     # => <null:User>
+User.guest    # => <null:User>
+```
+
+
 ## Contributing
 
 1. Fork it ( https://github.com/Originate/active_null/fork )

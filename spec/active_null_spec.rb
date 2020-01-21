@@ -21,6 +21,11 @@ describe ActiveNull do
     specify { expect(Test::TestModel.null).to be_instance_of(Test::NullTestModel) }
   end
 
+  describe '.guest' do
+    specify { expect(User.null).to be_instance_of(NullUser) }
+    specify { expect(User.guest).to be_instance_of(NullUser) }
+  end
+
   describe '.null_model' do
     specify { expect(Post.null.override).to eq 'I am an override.' }
   end
