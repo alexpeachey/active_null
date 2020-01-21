@@ -17,6 +17,7 @@ module ActiveNull
   def null_model(method_name=nil, &block)
     @null_model_overrides = if block_given?
       Module.new.tap { |m| m.module_eval(&block) }
+    end
 
     if method_name
       singleton_class.class_eval do
