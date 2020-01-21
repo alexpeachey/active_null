@@ -15,6 +15,8 @@ end
 class User < ActiveRecord::Base
   extend ActiveNull
   has_many :comments, as: :author
+
+  null_model(:guest)
 end
 
 class Comment < ActiveRecord::Base
