@@ -92,12 +92,22 @@ module ActiveNull
     end
 
     def full_name
-      return name if model.parent == Object
-      "#{model.parent.name}::#{name}"
+      return name if module_parent == Object
+      "#{module_parent_name}::#{name}"
     end
 
     def set_null_model(null)
-      model.parent.const_set name, null
+      module_parent.const_set name, null
+    end
+
+    private
+
+    def module_parent
+      @module_parent ||= model.try(:module_parent) || model.parent
+    end
+
+    def module_parent_name
+      @module_parent_name ||= model.try(:module_parent_name) || model.parent.name
     end
   end
 end
